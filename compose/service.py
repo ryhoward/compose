@@ -347,6 +347,12 @@ class Service(object):
                                        (self.name, binarystr_to_unicode(ex.explanation)))
 
     def ensure_image_exists(self, do_build=BuildAction.none, silent=False, cli=False):
+
+        build_opts = self.options.get('build', {})
+        path = rewrite_build_path(build_opts.get('context'))
+        if not os.path.exists(path):
+            return
+
         if self.can_be_built() and do_build == BuildAction.force:
             self.build(cli=cli)
             return
