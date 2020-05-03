@@ -50,7 +50,7 @@ tests_require = [
     'pytest < 6',
 ]
 
-
+print("your message")
 if sys.version_info[:2] < (3, 4):
     tests_require.append('mock >= 1.0.1, < 4')
 

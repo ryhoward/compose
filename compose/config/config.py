@@ -724,7 +724,7 @@ def validate_extended_service_dict(service_dict, filename, service):
 def validate_service(service_config, service_names, config_file):
     service_dict, service_name = service_config.config, service_config.name
     validate_service_constraints(service_dict, service_name, config_file)
-    validate_paths(service_dict)
+    #validate_paths(service_dict)
 
     validate_cpu(service_config)
     validate_ulimits(service_config)
@@ -1411,25 +1411,26 @@ def is_url(build_path):
     return build_path.startswith(DOCKER_VALID_URL_PREFIXES)
 
 
-def validate_paths(service_dict):
-    if 'build' in service_dict:
-        build = service_dict.get('build', {})
-
-        if isinstance(build, six.string_types):
-            build_path = build
-        elif isinstance(build, dict) and 'context' in build:
-            build_path = build['context']
-        else:
-            # We have a build section but no context, so nothing to validate
-            return
-
-        if (
-            not is_url(build_path) and
-            (not os.path.exists(build_path) or not os.access(build_path, os.R_OK))
-        ):
-            raise ConfigurationError(
-                "build path %s either does not exist, is not accessible, "
-                "or is not a valid URL." % build_path)
+#def validate_paths(service_dict):
+#    if 'build' in service_dict:
+#        build = service_dict.get('build', {})
+#
+#        if isinstance(build, six.string_types):
+#            build_path = build
+#        elif isinstance(build, dict) and 'context' in build:
+#             build_path = build['context']
+#         else:
+#             # We have a build section but no context, so nothing to validate
+#             return
+#
+#         if (
+#             not is_url(build_path) and
+#             (not os.path.exists(build_path) or not os.access(build_path, os.R_OK))
+#         ):
+#             print("your message2")
+#             raise ConfigurationError(
+#                 "build path %s either does not exist, is not accessible, "
+#                 "or is not a valid URL ya booger." % build_path)
 
 
 def merge_path_mappings(base, override):
