@@ -347,20 +347,27 @@ class Service(object):
                                        (self.name, binarystr_to_unicode(ex.explanation)))
 
     def ensure_image_exists(self, do_build=BuildAction.none, silent=False, cli=False):
+        #
+        # print("your message")
+        # print(self.options)
+        # build_opts = self.options.get('build', {})
+        # print(build_opts.get('context'))
+        # path = rewrite_build_path(build_opts.get('context'))
+        # print(path)
+        # print(do_build)
 
-        print("your message")
-        print(self.options)
-        build_opts = self.options.get('build', {})
-        print(build_opts.get('context'))
-        path = rewrite_build_path(build_opts.get('context'))
-        print(path)
-        if build_opts is not None and not os.path.exists(path) and do_build == BuildAction.force:
-            #if path is None or (not os.path.exists(path) and not do_build == BuildAction.force):
-            try:
-                self.image()
-                return
-            except NoSuchImageError:
-                pass
+        # if we perform a build skip (--no-build), ignore the path validation check.
+        if do_build is BuildAction.skip:
+            return
+
+
+        # Build item exists in properties, but path is not yet validated
+        # if build_opts is not None:
+        #     print("1")
+        #     # If path does not exist AND build action skip (--no-build) is specified
+        #     if not os.path.exists(path) and do_build is BuildAction.skip:
+        #         print("Path does not exist. Trying to start without building.")
+        #         return
 
         if self.can_be_built() and do_build == BuildAction.force:
             self.build(cli=cli)

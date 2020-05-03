@@ -721,6 +721,7 @@ def validate_extended_service_dict(service_dict, filename, service):
             "%s services with 'depends_on' cannot be extended" % error_prefix)
 
 
+
 def validate_service(service_config, service_names, config_file):
     service_dict, service_name = service_config.config, service_config.name
     validate_service_constraints(service_dict, service_name, config_file)
@@ -1430,7 +1431,7 @@ def is_url(build_path):
 #             print("your message2")
 #             raise ConfigurationError(
 #                 "build path %s either does not exist, is not accessible, "
-#                 "or is not a valid URL ya booger." % build_path)
+#                 "or is not a valid URL" % build_path)
 
 
 def merge_path_mappings(base, override):
