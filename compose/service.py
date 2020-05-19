@@ -357,9 +357,28 @@ class Service(object):
         # print(do_build)
 
         # if we perform a build skip (--no-build), ignore the path validation check.
-        if do_build is BuildAction.skip:
-            return
 
+        # print("sleeping dogs")
+        # print(type(self.image()))
+        # print(do_build)
+        # print("love snoring")
+
+        image_inspect = None
+        try:
+            image_inspect = self.image()
+        except NoSuchImageError:
+            image_inspect = None
+            pass
+
+        if image_inspect is not None:
+            if image_inspect is dict and do_build is BuildAction.skip:
+                return
+
+        # def image(self):
+        #     try:
+        #         return self.client.inspect_image(self.image_name)
+        #     except ImageNotFound:
+        #         raise NoSuchImageError("Image '{}' not found".format(self.image_name))
 
         # Build item exists in properties, but path is not yet validated
         # if build_opts is not None:
@@ -373,11 +392,11 @@ class Service(object):
             self.build(cli=cli)
             return
 
-        try:
-            self.image()
-            return
-        except NoSuchImageError:
-            pass
+#        try:
+#            self.image()
+#            return
+#        except NoSuchImageError:
+#            pass
 
         if not self.can_be_built():
             self.pull(silent=silent)

@@ -725,7 +725,6 @@ def validate_extended_service_dict(service_dict, filename, service):
 def validate_service(service_config, service_names, config_file):
     service_dict, service_name = service_config.config, service_config.name
     validate_service_constraints(service_dict, service_name, config_file)
-    #validate_paths(service_dict)
 
     validate_cpu(service_config)
     validate_ulimits(service_config)
